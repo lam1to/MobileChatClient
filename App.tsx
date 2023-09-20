@@ -1,12 +1,10 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
-import { useState } from "react";
-import { gStyle } from "./Style/mainStyle";
+import { useEffect, useState } from "react";
+import { Provider } from "react-redux";
+import { setupStore } from "./store/store";
+import MainIndex from "./index";
 import MainStack from "./navigate";
-import Navbar from "./components/Navbar/Navbar";
-import I18n from "react-native-i18n";
 
 const fonts = () =>
   Font.loadAsync({
@@ -16,14 +14,14 @@ const fonts = () =>
 
 export default function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const store = setupStore();
   if (!isLoading)
-    // return (
-    //   <View style={gStyle.main}>
-    //     <Navbar></Navbar>
-    //     <MainStack />
-    //   </View>
-    // );
-    return <MainStack />;
+    return (
+      <Provider store={store}>
+        <MainIndex />
+        {/* <MainStack /> */}
+      </Provider>
+    );
   else {
     return (
       <AppLoading
@@ -34,12 +32,3 @@ export default function App() {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

@@ -1,0 +1,19 @@
+.loader{
+    border-radius: 50%;
+    border: 4px dashed  #95ECB3;
+    animation: rotate 1s infinite linear;
+    animation-direction: alternate;
+}
+.loader_block{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@keyframes rotate{
+    from{
+        transform: rotate(0deg) scale(1);
+    }
+    to{
+        transform: rotate(360deg) scale(1.4);
+    }
+}
