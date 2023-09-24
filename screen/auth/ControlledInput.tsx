@@ -9,14 +9,14 @@ import { AntDesign } from "@expo/vector-icons";
 import { gStyle } from "../../Style/mainStyle";
 import { Pressable, Text, TextInput, TextInputProps, View } from "react-native";
 import { authStyle } from "../../Style/authStyle";
-import { IFormAuth } from "../../types/IForm";
+import { IFormLogin } from "../../types/IForm";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 
 export interface TextInputPropss
-  extends UseControllerProps<IFormAuth>,
+  extends UseControllerProps<IFormLogin>,
     TextInputProps {
-  errors: FieldErrors<IFormAuth>;
+  errors: FieldErrors<IFormLogin>;
   defaultValue: string;
   isPassword?: boolean;
 }
@@ -40,11 +40,6 @@ export const ControlledInput = (props: TextInputPropss) => {
       rules={rules}
       render={({ field: { onChange, onBlur, value } }) => (
         <View style={[authStyle.block_input_error]}>
-          {errors[field.name] && (
-            <Text style={[gStyle.redText, authStyle.error]}>
-              {errors[field.name]?.message}
-            </Text>
-          )}
           {isPassword ? (
             <View style={[gStyle.flexB, authStyle.blockInput]}>
               <TextInput
@@ -79,6 +74,11 @@ export const ControlledInput = (props: TextInputPropss) => {
               onBlur={onBlur}
               onChangeText={(value) => onChange(value)}
             />
+          )}
+          {errors[field.name] && (
+            <Text style={[gStyle.redText, authStyle.error]}>
+              {errors[field.name]?.message}
+            </Text>
           )}
         </View>
       )}

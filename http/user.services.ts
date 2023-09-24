@@ -6,6 +6,7 @@ import {
   IuserChat,
   IuserForState,
   IuserLogin,
+  IuserReg,
 } from "../types/IUser";
 import { AxiosError } from "axios";
 import { IError } from "../types/IError";
@@ -14,7 +15,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 // import { IFi } from "../components/Modal/ModalUserInfo";
 
 export const registration = async (
-  user: Iuser,
+  user: IuserReg,
   setError: Dispatch<SetStateAction<IError>>
 ) => {
   const res = await $host

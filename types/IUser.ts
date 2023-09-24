@@ -6,6 +6,7 @@ export interface Iuser {
   password: string;
   avatar_path: string;
 }
+export interface IuserReg extends Omit<Iuser, "id" | "avatar_path"> {}
 export interface IuserLogin
   extends Omit<Iuser, "name" | "lastName" | "id" | "avatar_path"> {}
 

@@ -35,7 +35,7 @@ export const authStyle = StyleSheet.create({
     backgroundColor: "#0E0B1D",
     paddingLeft: 5,
     marginBottom: 10,
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
     position: "relative",
   },
   containerInput: {
@@ -69,7 +69,7 @@ export const authStyle = StyleSheet.create({
 
   block_input_error: {
     height: 80,
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
   },
   error: {
     color: "red",

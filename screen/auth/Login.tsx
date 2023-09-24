@@ -30,7 +30,7 @@ import {
   SubmitHandler,
   useForm,
 } from "react-hook-form";
-import { IFormAuth } from "../../types/IForm";
+import { IFormLogin } from "../../types/IForm";
 import { ControlledInput } from "./ControlledInput";
 
 const LoginScreen = () => {
@@ -50,13 +50,14 @@ const LoginScreen = () => {
     formState: { errors },
     formState,
     handleSubmit,
-  } = useForm<IFormAuth>({
+  } = useForm<IFormLogin>({
     mode: "onChange",
     defaultValues: {
       email: "",
+      password: "",
     },
   });
-  const onSubmit: SubmitHandler<IFormAuth> = async (data) => {
+  const onSubmit: SubmitHandler<IFormLogin> = async (data) => {
     setUser(data);
     const getUser: IuserForState = await login(user, setError);
     if (getUser) {
@@ -102,6 +103,7 @@ const LoginScreen = () => {
           <View style={authStyle.containerInput}>
             <ControlledInput
               defaultValue=""
+              placeholder={I18n.t("auth_email")}
               errors={errors}
               name="email"
               control={control}
@@ -116,6 +118,7 @@ const LoginScreen = () => {
             <ControlledInput
               isPassword={true}
               defaultValue=""
+              placeholder={I18n.t("auth_password")}
               errors={errors}
               name="password"
               control={control}
