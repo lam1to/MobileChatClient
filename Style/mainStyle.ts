@@ -1,4 +1,5 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, useWindowDimensions } from "react-native";
+// const { width, height } = useWindowDimensions();
 export const gStyle = StyleSheet.create({
   main: {
     flex: 1,
@@ -9,11 +10,18 @@ export const gStyle = StyleSheet.create({
   flexB: {
     flexDirection: "row",
   },
+  flex1: {
+    flex: 1,
+  },
   text: {
     color: "#6EFFB1",
   },
   centerContainer: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  flexCenterBlockNoWith: {
     justifyContent: "center",
     alignItems: "center",
   },
@@ -35,5 +43,8 @@ export const gStyle = StyleSheet.create({
   flexItemCenter: {
     justifyContent: "center",
     alignItems: "center",
+  },
+  redText: {
+    color: "red",
   },
 });

@@ -2,16 +2,12 @@ import React, { SyntheticEvent, useEffect, useState } from "react";
 import {
   View,
   Text,
-  TextInput,
-  Button,
   Pressable,
-  StyleSheet,
   GestureResponderEvent,
   useWindowDimensions,
 } from "react-native";
 import { gStyle } from "../../Style/mainStyle";
 import I18n from "../../i18n/index";
-import { Formik } from "formik";
 import { authStyle } from "../../Style/authStyle";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -21,13 +17,21 @@ import { login } from "../../http/user.services";
 import { UserSlice } from "../../store/Reducers/UserSlice";
 import { IError } from "../../types/IError";
 import { useAppDispatch } from "../../Hooks/redux";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
 import { useAnimatedAuth } from "../../Hooks/useAnimatedAuth";
+import {
+  Controller,
+  FormProvider,
+  SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
+import { IFormAuth } from "../../types/IForm";
+import { ControlledInput } from "./ControlledInput";
 
 const LoginScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<AuthParamList>>();
@@ -39,16 +43,36 @@ const LoginScreen = () => {
   const dispatch = useAppDispatch();
   const [error, setError] = useState<IError>({} as IError);
 
+  const animationAuth = useAnimatedAuth(true);
+
+  const {
+    control,
+    formState: { errors },
+    formState,
+    handleSubmit,
+  } = useForm<IFormAuth>({
+    mode: "onChange",
+    defaultValues: {
+      email: "",
+    },
+  });
+  const onSubmit: SubmitHandler<IFormAuth> = async (data) => {
+    setUser(data);
+    const getUser: IuserForState = await login(user, setError);
+    if (getUser) {
+      dispatch(SetUser(getUser));
+    }
+    console.log({ data });
+  };
   const loginF = async (e: GestureResponderEvent) => {
     e.preventDefault();
+
     const getUser: IuserForState = await login(user, setError);
     if (getUser) {
       dispatch(SetUser(getUser));
     }
   };
-  const [viewPassword, setViewPassword] = useState<boolean>(true);
 
-  const animationAuth = useAnimatedAuth(true);
   return (
     <Animated.View
       sharedTransitionTag="auth"
@@ -74,28 +98,36 @@ const LoginScreen = () => {
               {I18n.t("auth_registration")}
             </Text>
           </View>
-          <View style={authStyle.containerInput}>
-            <TextInput
-              value={user.email}
-              placeholder={I18n.t("auth_email")}
-              style={authStyle.input}
-              onChangeText={(text) =>
-                setUser((prev) => ({ ...prev, email: text }))
-              }
-            />
-            <View>
-              <TextInput
-                value={user.password}
-                placeholder={I18n.t("auth_password")}
-                secureTextEntry={viewPassword}
-                style={[authStyle.input, gStyle.marginBotton10]}
-                onChangeText={(text) =>
-                  setUser((prev) => ({ ...prev, password: text }))
-                }
-              />
-            </View>
 
-            <Pressable style={authStyle.submitButton} onPress={loginF}>
+          <View style={authStyle.containerInput}>
+            <ControlledInput
+              defaultValue=""
+              errors={errors}
+              name="email"
+              control={control}
+              rules={{
+                required: "Email is required!",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "invalid email address",
+                },
+              }}
+            />
+            <ControlledInput
+              isPassword={true}
+              defaultValue=""
+              errors={errors}
+              name="password"
+              control={control}
+              secureTextEntry={true}
+              rules={{
+                required: "password is required!",
+              }}
+            />
+            <Pressable
+              style={authStyle.submitButton}
+              onPress={handleSubmit(onSubmit)}
+            >
               <Text style={authStyle.buttonText}>{I18n.t("auth_login2")}</Text>
             </Pressable>
           </View>

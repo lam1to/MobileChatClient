@@ -28,6 +28,7 @@ const RegistrationScreen = () => {
   const { width, height } = useWindowDimensions();
   const navigation = useNavigation<NativeStackNavigationProp<AuthParamList>>();
   const authAnimation = useAnimatedAuth(false);
+
   return (
     <Animated.View
       sharedTransitionTag="auth"

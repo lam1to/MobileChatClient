@@ -29,11 +29,14 @@ export const authStyle = StyleSheet.create({
     borderWidth: 0,
     color: "#6EFFB1",
     height: 40,
+    underlineColorAndroid: "none",
     borderBottomColor: "#AA76D2",
     borderBottomWidth: 1,
     backgroundColor: "#0E0B1D",
     paddingLeft: 5,
     marginBottom: 10,
+    justifyContent: "flex-end",
+    position: "relative",
   },
   containerInput: {
     maxWidth: "80%",
@@ -41,6 +44,7 @@ export const authStyle = StyleSheet.create({
     justifyContent: "center",
   },
   submitButton: {
+    marginTop: 20,
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 12,
@@ -61,5 +65,35 @@ export const authStyle = StyleSheet.create({
   },
   icon: {
     marginLeft: 10,
+  },
+
+  block_input_error: {
+    height: 80,
+    justifyContent: "flex-end",
+  },
+  error: {
+    color: "red",
+    marginBottom: 10,
+  },
+  viewPassword: {
+    alignItems: "center",
+    justifyContent: "center",
+    resizeMode: "stretch",
+  },
+  blockInput: {
+    borderWidth: 0,
+    color: "#6EFFB1",
+    height: 40,
+    borderBottomColor: "#AA76D2",
+    borderBottomWidth: 1,
+    backgroundColor: "#0E0B1D",
+    marginBottom: 10,
+    justifyContent: "flex-end",
+    position: "relative",
+  },
+  isHighlighted: {
+    borderWidth: 0,
+    borderColor: "black",
+    outline: "none",
   },
 });

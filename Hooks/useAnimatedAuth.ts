@@ -28,7 +28,7 @@ export const useAnimatedAuth = (isLogin: boolean) => {
       translateX.value = withTiming(0, { duration: 200 });
     } else {
       opacity.value = 0;
-      translateX.value = -width;
+      translateX.value = isLogin ? -width : width;
     }
   }, [isFocused]);
 
